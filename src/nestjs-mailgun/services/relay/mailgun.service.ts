@@ -1,15 +1,15 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { MAILGUN_CONFIGURATION } from '../../tokens/tokens';
 import Mailgun from 'mailgun.js';
-import Client from 'mailgun.js/dist/lib/client';
-import Options from 'mailgun.js/dist/lib/interfaces/Options';
+import Client from 'mailgun.js/client';
+import Options from 'mailgun.js/interfaces/Options';
 import { MailgunEmailModel } from '../../../nestjs-mailgun/classes/mailgun-email-model';
 import FormData from 'form-data';
 import {
   CreateUpdateList,
   DestroyedList,
   MailingList,
-} from 'mailgun.js/dist/lib/interfaces/lists';
+} from 'mailgun.js/interfaces/lists';
 import {
   CreateUpdateMailListMembers,
   DeletedMember,
@@ -17,7 +17,8 @@ import {
   MailListMembersQuery,
   MultipleMembersData,
   NewMultipleMembersResponse,
-} from 'mailgun.js/dist/lib/interfaces/mailListMembers';
+} from 'mailgun.js/interfaces/mailListMembers';
+import {ValidationResult} from 'mailgun.js/interfaces/Validate';
 
 export interface EmailOptions {
   from: string;
@@ -44,13 +45,9 @@ export class MailgunService {
   ): Promise<any> => this.mailgun.messages.create(domain, data);
 
   public validateEmail = async (
-    email: string,
-  ): Promise<{
-    address: string;
-    did_you_mean: string;
-    is_valid: boolean;
-    parts: { display_name: string; domain: string; local_part: string };
-  }> => this.mailgun.validate.get(email);
+   email: string,
+  ): Promise<ValidationResult> => this.mailgun.validate.get(email);
+
 
   public createList = async (data: CreateUpdateList): Promise<MailingList> =>
     this.mailgun.lists.create(data);
