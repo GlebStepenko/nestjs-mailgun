@@ -13,6 +13,8 @@
     "start:dev": "tsc -w",
     "build": "tsc",
     "prepare": "npm run build",
+    "prepublish": "npm run build",
+    "publish:npm": "npm publish --access public",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "jest",
@@ -36,7 +38,7 @@
     "url": "https://github.com/GlebStepenko/nestjs-mailgun/issues"
   },
   "peerDependencies": {
-    "@nestjs/common": "^7.0.7"
+    "@nestjs/common": "^8.4.6"
   },
   "dependencies": {
     "form-data": "^4.0.0",
