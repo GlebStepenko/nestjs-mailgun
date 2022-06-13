@@ -1,6 +1,6 @@
 {
   "name": "@gleb216/nestjs-mailgun",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "NestJS provider for sending emails with mailgun",
   "author": "GlebStepenko <gleb216@gmail.com>, Nuno Carvalhão <nuno.carvalhao@gmail.com>",
   "license": "MIT",
