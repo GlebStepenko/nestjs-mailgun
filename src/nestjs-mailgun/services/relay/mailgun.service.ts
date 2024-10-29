@@ -1,23 +1,19 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { MAILGUN_CONFIGURATION } from '../../tokens/tokens';
-import Mailgun from 'mailgun.js';
-import Client from 'mailgun.js/client';
-import Options from 'mailgun.js/interfaces/Options';
-import FormData from 'form-data';
-import {
+import Mailgun, {
+  Interfaces,
+  MailgunClientOptions,
+  ValidationResult,
   CreateUpdateList,
-  DestroyedList,
   MailingList,
-} from 'mailgun.js/interfaces/lists';
-import {
+  DestroyedList,
   CreateUpdateMailListMembers,
-  DeletedMember,
   MailListMember,
   MultipleMembersData,
-  NewMultipleMembersResponse,
-} from 'mailgun.js/interfaces/mailListMembers';
-import {ValidationResult} from 'mailgun.js/interfaces/Validate';
-import {MailgunMessageData, MessagesSendResult} from 'mailgun.js/interfaces/Messages';
+  NewMultipleMembersResponse, DeletedMember
+} from 'mailgun.js';
+import {MailgunMessageData, MessagesSendResult} from 'mailgun.js';
+
 
 export interface EmailOptions {
   from: string;
@@ -31,8 +27,8 @@ export interface EmailOptions {
 }
 @Injectable()
 export class MailgunService {
-  private readonly mailgun: Client;
-  constructor(@Inject(MAILGUN_CONFIGURATION) private readonly configuration: Options) {
+  private readonly mailgun: Interfaces.IMailgunClient;
+  constructor(@Inject(MAILGUN_CONFIGURATION) private readonly configuration: MailgunClientOptions) {
     this.mailgun = new Mailgun(FormData).client(configuration);
   }
 
