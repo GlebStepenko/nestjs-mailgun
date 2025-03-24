@@ -1,5 +1,5 @@
 import { ModuleMetadata } from '@nestjs/common/interfaces';
-import {MailgunClientOptions} from 'mailgun.js';
+import MailgunClientOptions from 'mailgun.js';
 
 export interface OptionsAsync
   extends Pick<ModuleMetadata, 'imports'> {
