@@ -1,6 +1,6 @@
 {
   "name": "@gleb216/nestjs-mailgun",
-  "version": "3.0.9",
+  "version": "3.0.10",
   "description": "NestJS provider for sending emails with mailgun",
   "author": "GlebStepenko <gleb216@gmail.com>, Nuno Carvalhão <nuno.carvalhao@gmail.com>",
   "license": "MIT",
@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "start:dev": "tsc -w",
-    "build": "tsc",
+    "build": "nest build -p tsconfig.build.json",
     "prepare": "npm run build",
     "prepublish": "npm run build",
     "publish:npm": "npm publish --access public",
@@ -20,7 +20,9 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:app:build": "nest build -p src/test.app/tsconfig.build.json",
+    "test:app:start": "nest start -p src/test.app/tsconfig.build.json"
   },
   "keywords": [
     "nestjs",

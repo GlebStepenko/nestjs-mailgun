@@ -1,32 +1,38 @@
-import { Module, Provider } from '@nestjs/common';
+import {DynamicModule, Module, Provider} from '@nestjs/common';
 import { OptionsAsync } from './configuration';
 import { MailgunService } from './services/relay/mailgun.service';
 import { MAILGUN_CONFIGURATION } from './tokens/tokens';
 import MailgunClientOptions from 'mailgun.js';
 
-@Module({})
+@Module({
+  providers: [
+    MailgunService,
+  ],
+  exports: [
+   MailgunService,
+  ],
+})
 export class MailgunModule {
-  public static forRoot(config: MailgunClientOptions) {
+  static forRoot(config: MailgunClientOptions) {
     return {
       module: MailgunModule,
       providers: [
         { provide: MAILGUN_CONFIGURATION, useValue: config },
-        MailgunService,
       ],
-      exports: [MailgunService],
     };
   }
-  public static forAsyncRoot(config: OptionsAsync) {
+  static forAsyncRoot(config: OptionsAsync): DynamicModule {
     return {
+      global: true,
       module: MailgunModule,
-      imports: config.imports || [],
-      providers: [this.createAsyncProviders(config), MailgunService],
-      exports: [MailgunService],
+      imports: config.imports ?? [],
+      providers: [
+       this.createAsyncProviders(config),
+      ],
     };
   }
-  private static createAsyncProviders(
-    options: OptionsAsync,
-  ): Provider {
+
+  private static createAsyncProviders(options: OptionsAsync): Provider {
     return {
       provide: MAILGUN_CONFIGURATION,
       useFactory: options.useFactory,
